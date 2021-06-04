@@ -3,13 +3,12 @@ import Foundation
 final class FillWithColor {
     
     func fillWithColor(_ image: [[Int]], _ row: Int, _ column: Int, _ newColor: Int) -> [[Int]] {
+        guard row >= 0, column >= 0, row < image.count, column < image.first!.count else { return image }
         guard image.count > 0, image.first!.count > 0 else { return image }
+        
         let oldColor = image[row][column]
-        
-        if oldColor == newColor {
-            return image
-        }
-        
+        guard oldColor != newColor else { return image }
+
         var newImage = image
         newImage[row][column] = newColor
         
