@@ -6,6 +6,10 @@ final class FillWithColor {
         guard image.count > 0, image.first!.count > 0 else { return image }
         let oldColor = image[row][column]
         
+        if oldColor == newColor {
+            return image
+        }
+        
         var newImage = image
         newImage[row][column] = newColor
         
