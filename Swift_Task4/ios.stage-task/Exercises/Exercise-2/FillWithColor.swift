@@ -3,7 +3,8 @@ import Foundation
 final class FillWithColor {
     
     func fillWithColor(_ image: [[Int]], _ row: Int, _ column: Int, _ newColor: Int) -> [[Int]] {
-        guard row >= 0, column >= 0, row < image.count, column < image.first!.count else { return image }
+        
+        guard areValid(row: row, column: column, for: image) else { return image }
         guard image.count > 0, image.first!.count > 0 else { return image }
         
         let oldColor = image[row][column]
@@ -18,13 +19,17 @@ final class FillWithColor {
                           (row, column + 1)]
         
         for (nRow, nColumn) in neighbours {
-            guard nRow >= 0, nColumn >= 0, nRow < image.count, nColumn < image.first!.count else { continue }
-            
+            guard areValid(row: nRow, column: nColumn, for: image) else { continue }
+ 
             if image[nRow][nColumn] == oldColor {
                 newImage = fillWithColor(newImage, nRow, nColumn, newColor)
             }
         }
         
         return newImage
+    }
+    
+    private func areValid(row: Int, column: Int, for image: [[Int]]) -> Bool {
+        return row >= 0 && column >= 0 && row < image.count && column < image.first!.count
     }
 }
